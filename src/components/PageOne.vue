@@ -55,7 +55,7 @@
         <!-- <a href="" class="btn btn-primary w-100 btn-rounded">PRÓXIMO</a> -->
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 d-none d-md-block">
       <img src="img/desktop-pagina-1.png" alt="" class="img-responsive" />
     </div>
   </div>

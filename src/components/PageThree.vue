@@ -25,7 +25,7 @@
       >
       <a href="" class="btn w-100 btn-rounded">Editar Cadastro</a> -->
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 d-none d-md-block">
       <img src="img/desktop-pagina-2.png" alt="" class="img-responsive" />
     </div>
   </div>
