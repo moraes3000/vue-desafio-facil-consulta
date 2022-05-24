@@ -1,0 +1,34 @@
+<template>
+  <div class="row">
+    <div class="col-md-6">Página de conclusão</div>
+    <div class="col-md-6">
+      <img src="img/desktop-pagina-2.png" alt="" class="img-responsive" />
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "PageFour",
+  props: {
+    // msg: String
+  },
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.custom-checkbox {
+  background: var(--secondary-1);
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.custom-checkbox input {
+  margin: 0 15px;
+}
+</style>
