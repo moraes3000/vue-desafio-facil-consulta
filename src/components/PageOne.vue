@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-6">
-      <form class="mt-4">
+      <div class="mt-4">
         <div class="form-group">
           <label for="nomeCompleto">Nome Completo</label>
           <input
@@ -52,8 +52,8 @@
             </select>
           </div>
         </div>
-        <a href="" class="btn btn-primary w-100 btn-rounded">PRÓXIMO</a>
-      </form>
+        <!-- <a href="" class="btn btn-primary w-100 btn-rounded">PRÓXIMO</a> -->
+      </div>
     </div>
     <div class="col-md-6">
       <img src="img/desktop-pagina-1.png" alt="" class="img-responsive" />
@@ -67,6 +67,12 @@ export default {
   props: {
     // msg: String
   },
+  // methods: {
+  //   goToStep: function (step) {
+  //     this.activePhase = step;
+  //     console.log("clicou" + step);
+  //   },
+  // },
 };
 </script>
 

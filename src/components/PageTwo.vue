@@ -40,7 +40,7 @@
           >
         </div>
       </div>
-      <a href="" class="btn btn-primary w-100 btn-rounded">PRÓXIMO</a>
+      <!-- <a href="" class="btn btn-primary w-100 btn-rounded">PRÓXIMO</a> -->
     </div>
     <div class="col-md-6">
       <img src="img/desktop-pagina-2.png" alt="" class="img-responsive" />

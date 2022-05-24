@@ -20,10 +20,10 @@
         <p><strong>Forma de pagamento </strong><br />Forma de pagamento</p>
       </div>
 
-      <a href="" class="btn btn-primary w-100 btn-rounded"
+      <!-- <a href="" class="btn btn-primary w-100 btn-rounded"
         >CADASTRAR PROFISSIONAL</a
       >
-      <a href="" class="btn w-100 btn-rounded">Editar Cadastro</a>
+      <a href="" class="btn w-100 btn-rounded">Editar Cadastro</a> -->
     </div>
     <div class="col-md-6">
       <img src="img/desktop-pagina-2.png" alt="" class="img-responsive" />
