@@ -2,13 +2,22 @@
   <div class="row">
     <div class="col-md-6">
       <div>
-        <p><strong>Nome completo </strong><br />Nome completo</p>
+        <p>
+          <strong>Nome completo </strong><br />
+          {{ nomeCompleto }}
+        </p>
       </div>
       <div>
-        <p><strong>CPF </strong><br />CPF</p>
+        <p>
+          <strong>CPF </strong><br />
+          {{ cpf }}
+        </p>
       </div>
       <div>
-        <p><strong>Número de celular ou </strong><br />Número de celular ou</p>
+        <p>
+          <strong>Número de celular ou </strong><br />
+          {{ celular }}
+        </p>
       </div>
       <div>
         <p><strong>Estado/Cidade </strong><br />Estado/Cidade</p>
@@ -36,6 +45,9 @@ export default {
   name: "PageThree",
   props: {
     // msg: String
+    nomeCompleto: String,
+    cpf: String,
+    celular: String,
   },
 };
 </script>

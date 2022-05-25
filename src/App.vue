@@ -14,7 +14,70 @@
       <h2>Dados do profissional</h2>
 
       <div v-if="activePhase == 1">
-        <PageOne />
+        <!-- <PageOne /> -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mt-4">
+              <div class="form-group">
+                <label for="nomeCompleto">Nome Completo</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nomeCompleto"
+                  aria-describedby="nomeCompleto"
+                  placeholder="Digite o seu nome completo"
+                  v-model="nomeCompleto"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="cpf">CPF</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cpf"
+                  aria-describedby="cpf"
+                  placeholder="Digite o seu CPF"
+                  v-model="cpf"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="celular">Número do celular</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="celular"
+                  aria-describedby="celular"
+                  placeholder="(00) 0 0000-0000"
+                  v-model="celular"
+                />
+              </div>
+
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="estado">Estado</label>
+                  <select id="estado" class="form-control">
+                    <option selected>Selecione...</option>
+                    <option>...</option>
+                  </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="cidade">Cidade</label>
+                  <select id="cidade" class="form-control">
+                    <option selected>Selecione...</option>
+                    <option>...</option>
+                  </select>
+                </div>
+              </div>
+              <!-- <a href="" class="btn btn-primary w-100 btn-rounded">PRÓXIMO</a> -->
+            </div>
+          </div>
+          <div class="col-md-6 d-none d-md-block">
+            <img src="img/desktop-pagina-1.png" alt="" class="img-responsive" />
+          </div>
+        </div>
         <div class="row">
           <div class="col-md-6">
             <button
@@ -44,7 +107,7 @@
       </div>
 
       <div v-if="activePhase == 3">
-        <PageThree />
+        <PageThree :nomeCompleto="nomeCompleto" :cpf="cpf" :celular="celular" />
         <div class="row">
           <div class="col-md-6">
             <button
@@ -77,7 +140,7 @@
 </template>
 
 <script>
-import PageOne from "./components/PageOne.vue";
+// import PageOne from "./components/PageOne.vue";
 import PageTwo from "./components/PageTwo.vue";
 import PageThree from "./components/PageThree.vue";
 import PageFour from "./components/PageFour.vue";
@@ -85,7 +148,7 @@ import PageFour from "./components/PageFour.vue";
 export default {
   name: "App",
   components: {
-    PageOne,
+    // PageOne,
     PageTwo,
     PageThree,
     PageFour,
@@ -93,7 +156,9 @@ export default {
   data: function () {
     return {
       activePhase: 1,
-      nome: "",
+      nomeCompleto: "",
+      cpf: "",
+      celular: "",
     };
   },
 
