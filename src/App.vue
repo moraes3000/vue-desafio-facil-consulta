@@ -57,17 +57,41 @@
               <div class="row">
                 <div class="form-group col-md-6">
                   <label for="estado">Estado</label>
-                  <select id="estado" class="form-control">
-                    <option selected>Selecione...</option>
-                    <option>...</option>
+                  <select
+                    id="estado"
+                    class="form-control"
+                    v-model="uf"
+                    @change="getCity"
+                  >
+                    <option disabled selected>Selecione...</option>
+                    <option
+                      v-for="item in estado"
+                      :key="item.id"
+                      :value="item.id"
+                    >
+                      {{ item.nome }}
+                    </option>
                   </select>
                 </div>
 
                 <div class="form-group col-md-6">
                   <label for="cidade">Cidade</label>
-                  <select id="cidade" class="form-control">
-                    <option selected>Selecione...</option>
-                    <option>...</option>
+                  <select
+                    id="cidade"
+                    class="form-control"
+                    v-model="cidadeSelecionada"
+                  >
+                    <option disabled selected>Selecione...</option>
+                    <option
+                      v-for="item in cidade"
+                      :key="item.id"
+                      :value="item.id"
+                    >
+                      {{ item.nome }}
+                    </option>
+                    {{
+                      cidadeSelecionada
+                    }}
                   </select>
                 </div>
               </div>
@@ -107,7 +131,14 @@
       </div>
 
       <div v-if="activePhase == 3">
-        <PageThree :nomeCompleto="nomeCompleto" :cpf="cpf" :celular="celular" />
+        <PageThree
+          :nomeCompleto="nomeCompleto"
+          :cpf="cpf"
+          :celular="celular"
+          :estado="estado"
+          :uf="uf"
+          :cidadeSelecionada="cidadeSelecionada"
+        />
         <div class="row">
           <div class="col-md-6">
             <button
@@ -136,6 +167,10 @@
         </div>
       </div>
     </div>
+
+    <p v-for="item in cidade" :key="item.id" value="item.id">
+      {{ item.nome }}
+    </p>
   </div>
 </template>
 
@@ -159,6 +194,11 @@ export default {
       nomeCompleto: "",
       cpf: "",
       celular: "",
+      estado: "",
+      uf: "",
+      cidade: "",
+      cidadeSelecionada: "",
+      id: "",
     };
   },
 
@@ -172,6 +212,28 @@ export default {
       this.activePhase = this.activePhase - 1;
       console.log(`step atual ${this.activePhase}`);
     },
+
+    async getState() {
+      const req = await fetch(
+        "https://api-teste-front-end-fc.herokuapp.com/estados"
+      );
+
+      const data = await req.json();
+      this.estado = data;
+    },
+    async getCity(event) {
+      const id = event.target.value;
+      const req = await fetch(
+        `https://api-teste-front-end-fc.herokuapp.com/cidades?estadoId=${id}`
+      );
+
+      const data = await req.json();
+      this.cidade = data;
+    },
+  },
+  created() {
+    this.getState();
+    // this.getCity();
   },
 };
 </script>

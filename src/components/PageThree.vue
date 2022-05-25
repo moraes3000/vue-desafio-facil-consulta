@@ -20,7 +20,11 @@
         </p>
       </div>
       <div>
-        <p><strong>Estado/Cidade </strong><br />Estado/Cidade</p>
+        <p>
+          <strong>Estado/Cidade </strong><br />
+          <!-- {{ estado }} ---  -->
+          {{ uf }} - {{ cidadeSelecionada }}
+        </p>
       </div>
       <div>
         <p><strong>Preço da consulta </strong><br />Preço da consulta</p>
@@ -48,6 +52,9 @@ export default {
     nomeCompleto: String,
     cpf: String,
     celular: String,
+    estado: Array,
+    uf: String,
+    cidadeSelecionada: String,
   },
 };
 </script>
