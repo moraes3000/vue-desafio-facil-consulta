@@ -23,11 +23,18 @@
                 <input
                   type="text"
                   class="form-control"
+                  v-bind:class="{ 'is-invalid': msgError }"
                   id="nomeCompleto"
                   aria-describedby="nomeCompleto"
                   placeholder="Digite o seu nome completo"
                   v-model="nomeCompleto"
+                  minLength="3"
+                  maxlength="45"
+                  required
                 />
+                <div v-if="erro" class="alert alert-danger mt-3" role="alert">
+                  {{ msgError }}
+                </div>
               </div>
 
               <div class="form-group">
@@ -106,7 +113,7 @@
           <div class="col-md-6">
             <button
               type="button"
-              @click.prevent="goToStep(2)"
+              @click.prevent="verificarNomeCompleto()"
               class="btn btn-primary w-100 btn-rounded"
             >
               Proximo
@@ -116,7 +123,75 @@
       </div>
 
       <div v-if="activePhase == 2">
-        <PageTwo />
+        <!-- <PageTwo /> -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mt-4">
+              <div class="form-group">
+                <label for="especialidade">Especialidade principal</label>
+                <select
+                  id="especialidade"
+                  class="form-control"
+                  v-model="especialidade"
+                >
+                  <option disabled selected>Selecione...</option>
+                  <option
+                    v-for="item in especialidades"
+                    :key="item.id"
+                    :value="item.id"
+                  >
+                    {{ item.nome }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="valor">RS</span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Valor"
+                  aria-label="valor"
+                  aria-describedby="valor"
+                />
+              </div>
+
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="pix" />
+                <label class="custom-control-label" for="pix">PIX</label>
+              </div>
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="dinheiro"
+                />
+                <label class="custom-control-label" for="dinheiro"
+                  >Dinheiro</label
+                >
+              </div>
+              <div
+                class="
+                  custom-control custom-checkbox
+                  d-flex
+                  justify-content-start
+                "
+              >
+                <input type="checkbox" class="custom-control-input" id="cart" />
+                <label class="custom-control-label" for="cart"
+                  >Cartão de crédito</label
+                >
+              </div>
+            </div>
+            <!-- <a href="" class="btn btn-primary w-100 btn-rounded">PRÓXIMO</a> -->
+          </div>
+          <div class="col-md-6 d-none d-md-block">
+            <img src="img/desktop-pagina-2.png" alt="" class="img-responsive" />
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-md-6">
             <button
@@ -176,7 +251,7 @@
 
 <script>
 // import PageOne from "./components/PageOne.vue";
-import PageTwo from "./components/PageTwo.vue";
+// import PageTwo from "./components/PageTwo.vue";
 import PageThree from "./components/PageThree.vue";
 import PageFour from "./components/PageFour.vue";
 
@@ -184,7 +259,7 @@ export default {
   name: "App",
   components: {
     // PageOne,
-    PageTwo,
+    // PageTwo,
     PageThree,
     PageFour,
   },
@@ -199,6 +274,11 @@ export default {
       cidade: "",
       cidadeSelecionada: "",
       id: "",
+
+      especialidades: "",
+      especialidade: "",
+      erro: false,
+      msgError: "",
     };
   },
 
@@ -213,6 +293,17 @@ export default {
       console.log(`step atual ${this.activePhase}`);
     },
 
+    verificarNomeCompleto: function () {
+      this.erro = false;
+      if (this.nomeCompleto.length <= 3) {
+        this.erro = true;
+        this.msgError = "No minimo 3 caracteres";
+      } else if (this.nomeCompleto.length >= 5) {
+        this.erro = true;
+        this.msgError = "No maximo de 45 caracteres";
+      }
+    },
+
     async getState() {
       const req = await fetch(
         "https://api-teste-front-end-fc.herokuapp.com/estados"
@@ -221,6 +312,7 @@ export default {
       const data = await req.json();
       this.estado = data;
     },
+
     async getCity(event) {
       const id = event.target.value;
       const req = await fetch(
@@ -230,10 +322,21 @@ export default {
       const data = await req.json();
       this.cidade = data;
     },
+
+    //Disparar na segunda página
+    async getSpecialty() {
+      const req = await fetch(
+        "https://api-teste-front-end-fc.herokuapp.com/especialidades"
+      );
+
+      const data = await req.json();
+      this.especialidades = data;
+      // console.log(data);
+    },
   },
   created() {
     this.getState();
-    // this.getCity();
+    this.getSpecialty();
   },
 };
 </script>
@@ -279,5 +382,19 @@ h1 {
   font-family: "Comfortaa", cursive;
   font-weight: bold;
   color: var(--primary-0);
+}
+
+.custom-checkbox {
+  background: var(--secondary-1);
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.custom-checkbox input {
+  margin: 0 15px;
 }
 </style>
