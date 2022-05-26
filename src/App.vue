@@ -46,7 +46,17 @@
                   aria-describedby="cpf"
                   placeholder="Digite o seu CPF"
                   v-model="cpf"
+                  @change="formatCPF, getUser()"
+                  v-bind:class="{ 'is-invalid': msgErrorCPF }"
+                  required
                 />
+                <div
+                  v-if="existCPF"
+                  class="alert alert-danger mt-3"
+                  role="alert"
+                >
+                  {{ msgErrorCPF }}
+                </div>
               </div>
 
               <div class="form-group">
@@ -58,6 +68,7 @@
                   aria-describedby="celular"
                   placeholder="(00) 0 0000-0000"
                   v-model="celular"
+                  @change="formatCelular"
                 />
               </div>
 
@@ -279,6 +290,9 @@ export default {
       especialidade: "",
       erro: false,
       msgError: "",
+      msgErrorCPF: "",
+      x: "",
+      existCPF: false,
     };
   },
 
@@ -298,10 +312,27 @@ export default {
       if (this.nomeCompleto.length <= 3) {
         this.erro = true;
         this.msgError = "No minimo 3 caracteres";
-      } else if (this.nomeCompleto.length >= 5) {
+      } else if (this.nomeCompleto.length >= 45) {
         this.erro = true;
         this.msgError = "No maximo de 45 caracteres";
       }
+    },
+    formatCPF: function () {
+      this.x = this.cpf.replace(/[^0-9]/g, "");
+      this.cpf = `${this.x.substring(0, 3)}.${this.x.substring(
+        3,
+        6
+      )}.${this.x.substring(6, 9)}-${this.x.substring(9, 11)}`;
+      this.x;
+    },
+
+    formatCelular: function () {
+      this.x = this.celular.replace(/[^0-9]/g, "");
+      this.celular = `(${this.x.substring(0, 2)}) ${this.x.substring(
+        2,
+        3
+      )}. ${this.x.substring(3, 7)} - ${this.x.substring(7, 11)}   `;
+      this.x;
     },
 
     async getState() {
@@ -311,6 +342,22 @@ export default {
 
       const data = await req.json();
       this.estado = data;
+    },
+    async getUser() {
+      const req = await fetch(
+        "https://api-teste-front-end-fc.herokuapp.com/profissionais"
+      );
+
+      const data = await req.json();
+      this.existCPF = false;
+      for (let i = 0; i < data.length; i++) {
+        console.log(data[i].cpf);
+        if (this.cpf == data[i].cpf) {
+          // console.log("existe");
+          this.existCPF = true;
+          this.msgErrorCPF = "CPF já cadastrado";
+        }
+      }
     },
 
     async getCity(event) {
