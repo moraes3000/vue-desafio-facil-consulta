@@ -46,7 +46,7 @@
                   aria-describedby="cpf"
                   placeholder="Digite o seu CPF"
                   v-model="cpf"
-                  @change="formatCPF, getUser()"
+                  @change="getUser()"
                   v-bind:class="{ 'is-invalid': msgErrorCPF }"
                   required
                 />
@@ -358,6 +358,7 @@ export default {
           this.msgErrorCPF = "CPF já cadastrado";
         }
       }
+      this.formatCPF();
     },
 
     async getCity(event) {
