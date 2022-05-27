@@ -1,6 +1,10 @@
 <template>
   <div class="row">
-    <div class="col-md-6">Página de conclusão</div>
+    <div class="col-md-6">
+      <div class="mt-5 alert alert-success">
+        Formulário concluido com sucesso.
+      </div>
+    </div>
     <div class="col-md-6 d-none d-md-block">
       <img src="img/desktop-pagina-2.png" alt="" class="img-responsive" />
     </div>
@@ -10,13 +14,10 @@
 <script>
 export default {
   name: "PageFour",
-  props: {
-    // msg: String
-  },
+  props: {},
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .custom-checkbox {
   background: var(--secondary-1);

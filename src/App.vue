@@ -329,10 +329,10 @@
           <div class="col-md-6">
             <button
               type="button"
-              @click.prevent="goToStep(4)"
+              @click.prevent="cleanForm()"
               class="btn btn-primary w-100 btn-rounded"
             >
-              Proximo
+              Volta ao inicio e limpar dados
             </button>
           </div>
         </div>
@@ -397,6 +397,24 @@ export default {
     },
     backStep: function () {
       this.activePhase = this.activePhase - 1;
+    },
+    cleanForm: function () {
+      this.activePhase = 1;
+      this.nomeCompleto = "";
+      this.cpf = "";
+      this.celular = "";
+      this.estado = "";
+      this.uf = "";
+      this.cidade = "";
+      this.cidadeSelecionada = "";
+      this.id = "";
+
+      this.especialidades = "";
+      this.especialidade = "";
+      this.valor = 0;
+      this.formaPagamento = [];
+      this.abrirParcelamento = false;
+      this.parcelaCartao = "";
     },
 
     verificarNomeCompleto: function () {
@@ -576,11 +594,8 @@ body {
 
 .btn-rounded {
   border-radius: 15px;
-  /* background-color: var(--primary-0); */
 }
 
-/* font-family: 'Comfortaa', cursive; */
-/* font-family: 'Open Sans', sans-serif; */
 h1 {
   font-family: "Comfortaa", cursive;
   font-weight: bold;
