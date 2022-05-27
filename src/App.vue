@@ -182,6 +182,14 @@
                 {{ msgErrorValor }}
               </div>
 
+              <div
+                v-if="verificaPagamentos"
+                class="alert alert-danger mt-3"
+                role="alert"
+              >
+                Informe um pagamento
+              </div>
+
               <div class="custom-control custom-checkbox">
                 <input
                   type="checkbox"
@@ -377,12 +385,15 @@ export default {
       cidadeObrigatorio: false,
       especialidadeObrigatorio: false,
       valorObrigatorio: false,
+      verificaPagamentos: false,
     };
   },
 
   methods: {
     goToStep: function () {
+      console.log(`atual ${this.activePhase}`);
       this.activePhase = this.activePhase + 1;
+      console.log(`nova ${this.activePhase}`);
     },
     backStep: function () {
       this.activePhase = this.activePhase - 1;
@@ -449,11 +460,19 @@ export default {
         this.valorObrigatorio = true;
       }
     },
+    verificaPagamento: function () {
+      this.verificaPagamentos = false;
+
+      if (this.formaPagamento.length == 0) {
+        console.log(this.verificaPagamentos);
+        this.verificaPagamentos = true;
+      }
+    },
 
     campoObrigatório: function () {
-      // this.verificarNomeCompleto();
-      // this.verificaEstado();
-      // this.verificacCidade();
+      this.verificarNomeCompleto();
+      this.verificaEstado();
+      this.verificacCidade();
 
       if (!this.erro && !this.estadoObrigatorio && !this.cidadeObrigatorio) {
         this.goToStep();
@@ -463,9 +482,14 @@ export default {
     campoObrigatórioPageTwo: function () {
       this.verificacEspecialidade();
       this.verificacValor();
+      this.verificaPagamento();
 
-      if (!this.especialidadeObrigatorio) {
-        // this.goToStep();
+      if (
+        !this.especialidadeObrigatorio &&
+        !this.verificaPagamentos &&
+        !this.valorObrigatorio
+      ) {
+        this.goToStep();
       }
     },
     async getState() {
