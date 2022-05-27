@@ -124,7 +124,7 @@
           <div class="col-md-6">
             <button
               type="button"
-              @click.prevent="verificarNomeCompleto()"
+              @click.prevent="goToStep(2)"
               class="btn btn-primary w-100 btn-rounded"
             >
               Proximo
@@ -166,6 +166,7 @@
                   placeholder="Valor"
                   aria-label="valor"
                   aria-describedby="valor"
+                  v-model="valor"
                 />
               </div>
 
@@ -288,6 +289,8 @@ export default {
 
       especialidades: "",
       especialidade: "",
+      valor: 0,
+
       erro: false,
       msgError: "",
       msgErrorCPF: "",
