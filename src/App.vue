@@ -13,7 +13,7 @@
       <h1>Sobre o profissional</h1>
       <h2>Dados do profissional</h2>
 
-      <div v-if="activePhase == 1">
+      <form v-if="activePhase == 1">
         <!-- <PageOne /> -->
         <div class="row">
           <div class="col-md-6">
@@ -80,6 +80,8 @@
                     class="form-control"
                     v-model="uf"
                     @change="getCity"
+                    required
+                    v-bind:class="{ 'is-invalid': estadoObrigatorio }"
                   >
                     <option disabled selected>Selecione...</option>
                     <option
@@ -98,6 +100,7 @@
                     id="cidade"
                     class="form-control"
                     v-model="cidadeSelecionada"
+                    v-bind:class="{ 'is-invalid': cidadeObrigatorio }"
                   >
                     <option disabled selected>Selecione...</option>
                     <option
@@ -123,15 +126,15 @@
         <div class="row">
           <div class="col-md-6">
             <button
-              type="button"
-              @click.prevent="goToStep(2)"
+              type="submit"
+              @click.prevent="campoObrigatório()"
               class="btn btn-primary w-100 btn-rounded"
             >
               Proximo
             </button>
           </div>
         </div>
-      </div>
+      </form>
 
       <div v-if="activePhase == 2">
         <!-- <PageTwo /> -->
@@ -144,6 +147,7 @@
                   id="especialidade"
                   class="form-control"
                   v-model="especialidade"
+                  v-bind:class="{ 'is-invalid': especialidadeObrigatorio }"
                 >
                   <option disabled selected>Selecione...</option>
                   <option
@@ -167,7 +171,15 @@
                   aria-label="valor"
                   aria-describedby="valor"
                   v-model="valor"
+                  v-bind:class="{ 'is-invalid': valorObrigatorio }"
                 />
+              </div>
+              <div
+                v-if="valorObrigatorio"
+                class="alert alert-danger mt-3"
+                role="alert"
+              >
+                {{ msgErrorValor }}
               </div>
 
               <div class="custom-control custom-checkbox">
@@ -269,7 +281,7 @@
           <div class="col-md-6">
             <button
               type="button"
-              @click.prevent="goToStep(3)"
+              @click.prevent="campoObrigatórioPageTwo()"
               class="btn btn-primary w-100 btn-rounded"
             >
               Proximo
@@ -357,20 +369,23 @@ export default {
       erro: false,
       msgError: "",
       msgErrorCPF: "",
+      msgErrorValor: "",
       x: "",
+      pageTwo: false,
       existCPF: false,
+      estadoObrigatorio: false,
+      cidadeObrigatorio: false,
+      especialidadeObrigatorio: false,
+      valorObrigatorio: false,
     };
   },
 
   methods: {
-    goToStep: function (step) {
-      this.activePhase = step;
-      console.log(this.activePhase);
+    goToStep: function () {
+      this.activePhase = this.activePhase + 1;
     },
     backStep: function () {
-      console.log(`step atual ${this.activePhase}`);
       this.activePhase = this.activePhase - 1;
-      console.log(`step atual ${this.activePhase}`);
     },
 
     verificarNomeCompleto: function () {
@@ -405,6 +420,54 @@ export default {
       this.abrirParcelamento = !this.abrirParcelamento;
     },
 
+    verificaEstado: function () {
+      this.estadoObrigatorio = false;
+      if (this.uf.length == 0) {
+        this.estadoObrigatorio = true;
+      }
+    },
+    verificacCidade: function () {
+      this.cidadeObrigatorio = false;
+      if (this.cidadeSelecionada.length == 0) {
+        this.cidadeObrigatorio = true;
+      }
+    },
+    verificacEspecialidade: function () {
+      this.especialidadeObrigatorio = false;
+      if (this.especialidade.length == 0) {
+        this.especialidadeObrigatorio = true;
+      }
+    },
+    verificacValor: function () {
+      this.valorObrigatorio = false;
+
+      if (this.valor <= 30) {
+        this.msgErrorValor = "Valor menor que 30 reais";
+        this.valorObrigatorio = true;
+      } else if (this.valor >= 350) {
+        this.msgErrorValor = "Valor maior  que 350 reais";
+        this.valorObrigatorio = true;
+      }
+    },
+
+    campoObrigatório: function () {
+      // this.verificarNomeCompleto();
+      // this.verificaEstado();
+      // this.verificacCidade();
+
+      if (!this.erro && !this.estadoObrigatorio && !this.cidadeObrigatorio) {
+        this.goToStep();
+      }
+    },
+
+    campoObrigatórioPageTwo: function () {
+      this.verificacEspecialidade();
+      this.verificacValor();
+
+      if (!this.especialidadeObrigatorio) {
+        // this.goToStep();
+      }
+    },
     async getState() {
       const req = await fetch(
         "https://api-teste-front-end-fc.herokuapp.com/estados"
@@ -423,7 +486,6 @@ export default {
       for (let i = 0; i < data.length; i++) {
         console.log(data[i].cpf);
         if (this.cpf == data[i].cpf) {
-          // console.log("existe");
           this.existCPF = true;
           this.msgErrorCPF = "CPF já cadastrado";
         }
@@ -449,7 +511,6 @@ export default {
 
       const data = await req.json();
       this.especialidades = data;
-      // console.log(data);
     },
   },
   created() {
