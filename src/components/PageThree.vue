@@ -27,10 +27,21 @@
         </p>
       </div>
       <div>
-        <p><strong>Preço da consulta </strong><br />Preço da consulta</p>
+        <p>
+          <strong>Preço da consulta </strong><br />
+          {{
+            new Intl.NumberFormat("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }).format(valor)
+          }}
+        </p>
       </div>
       <div>
-        <p><strong>Forma de pagamento </strong><br />Forma de pagamento</p>
+        <p>
+          <strong>Forma de pagamento </strong><br />
+          {{ formaPagamento }} {{ parcelaCartao }}
+        </p>
       </div>
 
       <!-- <a href="" class="btn btn-primary w-100 btn-rounded"
@@ -55,6 +66,9 @@ export default {
     estado: Array,
     uf: String,
     cidadeSelecionada: String,
+    valor: Number,
+    formaPagamento: String,
+    parcelaCartao: String,
   },
 };
 </script>

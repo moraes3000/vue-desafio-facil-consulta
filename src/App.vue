@@ -161,7 +161,7 @@
                   <span class="input-group-text" id="valor">RS</span>
                 </div>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control"
                   placeholder="Valor"
                   aria-label="valor"
@@ -171,14 +171,22 @@
               </div>
 
               <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="pix" />
-                <label class="custom-control-label" for="pix">PIX</label>
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="pix"
+                  value="pix"
+                  v-model="formaPagamento"
+                />
+                <label class="custom-control-label" for="pix"> PIX </label>
               </div>
               <div class="custom-control custom-checkbox">
                 <input
                   type="checkbox"
                   class="custom-control-input"
                   id="dinheiro"
+                  value="dinheiro"
+                  v-model="formaPagamento"
                 />
                 <label class="custom-control-label" for="dinheiro"
                   >Dinheiro</label
@@ -191,10 +199,63 @@
                   justify-content-start
                 "
               >
-                <input type="checkbox" class="custom-control-input" id="cart" />
-                <label class="custom-control-label" for="cart"
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="cart"
+                  value="cartão de crédito"
+                  v-model="formaPagamento"
+                />
+                <label
+                  class="custom-control-label"
+                  for="cart"
+                  @click="abrirParcela()"
                   >Cartão de crédito</label
                 >
+              </div>
+
+              <div v-if="abrirParcelamento">
+                Parcelamento
+
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="exampleRadios"
+                    id="exampleRadios1"
+                    value="1x sem juros"
+                    v-model="parcelaCartao"
+                  />
+                  <label class="form-check-label" for="exampleRadios1">
+                    1x sem juros
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="exampleRadios"
+                    id="exampleRadios2"
+                    value="2x sem juros"
+                    v-model="parcelaCartao"
+                  />
+                  <label class="form-check-label" for="exampleRadios2">
+                    2x sem juros
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="exampleRadios"
+                    id="exampleRadios3"
+                    value="3x sem juros"
+                    v-model="parcelaCartao"
+                  />
+                  <label class="form-check-label" for="exampleRadios3">
+                    3x sem juros
+                  </label>
+                </div>
               </div>
             </div>
             <!-- <a href="" class="btn btn-primary w-100 btn-rounded">PRÓXIMO</a> -->
@@ -225,6 +286,9 @@
           :estado="estado"
           :uf="uf"
           :cidadeSelecionada="cidadeSelecionada"
+          :valor="valor"
+          :formaPagamento="formaPagamento"
+          :parcelaCartao="parcelaCartao"
         />
         <div class="row">
           <div class="col-md-6">
@@ -254,10 +318,6 @@
         </div>
       </div>
     </div>
-
-    <p v-for="item in cidade" :key="item.id" value="item.id">
-      {{ item.nome }}
-    </p>
   </div>
 </template>
 
@@ -290,6 +350,9 @@ export default {
       especialidades: "",
       especialidade: "",
       valor: 0,
+      formaPagamento: [],
+      abrirParcelamento: false,
+      parcelaCartao: "",
 
       erro: false,
       msgError: "",
@@ -336,6 +399,10 @@ export default {
         3
       )}. ${this.x.substring(3, 7)} - ${this.x.substring(7, 11)}   `;
       this.x;
+    },
+
+    abrirParcela: function () {
+      this.abrirParcelamento = !this.abrirParcelamento;
     },
 
     async getState() {
