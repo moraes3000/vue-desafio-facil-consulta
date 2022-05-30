@@ -123,6 +123,15 @@
             <img src="img/desktop-pagina-1.png" alt="" class="img-responsive" />
           </div>
         </div>
+        <div class="row my-4">
+          <div class="col-md-4">
+            <div class="barra w-50"></div>
+          </div>
+          <div class="col-md-2 barra-text">
+            <p class="">1 de 2</p>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-md-6">
             <button
@@ -282,6 +291,15 @@
           </div>
           <div class="col-md-6 d-none d-md-block">
             <img src="img/desktop-pagina-2.png" alt="" class="img-responsive" />
+          </div>
+        </div>
+
+        <div class="row my-4">
+          <div class="col-md-4">
+            <div class="barra w-100"></div>
+          </div>
+          <div class="col-md-2 barra-text">
+            <p class="">1 de 2</p>
           </div>
         </div>
 
@@ -614,5 +632,14 @@ h1 {
 
 .custom-checkbox input {
   margin: 0 15px;
+}
+
+.barra {
+  background: var(--primary-0);
+  height: 25px;
+  border-radius: 10px;
+}
+.barra-text p {
+  text-align: right;
 }
 </style>
